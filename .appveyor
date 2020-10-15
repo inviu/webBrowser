@@ -1,0 +1,26 @@
+clone_depth: 10
+shallow_clone: true
+
+image: Visual Studio 2017
+
+environment:
+    matrix:
+    - PLATFORM: amd64
+
+configuration:
+    - Release
+
+install:
+    - call "C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\VC\Auxiliary\Build\vcvars64.bat"
+
+before_build:
+    - set Path=%Path%
+    - mkdir build
+    - cd build
+
+build_script:
+    - cmake -G "NMake Makefiles" ../
+    - cmake --build build
+
+artifacts:
+  - path: build

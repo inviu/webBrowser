@@ -1,0 +1,26 @@
+<RCC>
+    <qresource prefix="/">
+        <file>data/bookmarks.json</file>
+        <file>data/default-maquettegrid.dat</file>
+		<file>data/profiles.ini</file>
+		<file>data/browsedata.db</file>
+        <file>data/fonts/morpheus.ttf</file>
+        <file>data/toolbar/add-bookmark.png</file>
+        <file>data/toolbar/view-bookmarks.png</file>
+        <file>data/toolbar/history.png</file>
+        <file>data/toolbar/back.png</file>
+        <file>data/toolbar/next.png</file>
+        <file>data/toolbar/new-tab.png</file>
+        <file>data/toolbar/new-window.png</file>
+        <file>data/toolbar/home.png</file>
+
+        <file>data/partners/bs.jpg</file>
+        <file>data/partners/lmdpc.jpg</file>
+
+        <!-- Sielo translations -->
+        <file>data/locale/fr_FR.qm</file>
+        <file>data/locale/de_DE.qm</file>
+        <file>data/locale/es_ES.qm</file>
+        <file>data/locale/ar_AR.qm</file>
+    </qresource>
+</RCC>
