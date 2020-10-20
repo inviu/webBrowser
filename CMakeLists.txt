@@ -30,6 +30,7 @@ if(${CMAKE_SYSTEM_NAME} MATCHES "Darwin")
 endif()
 
 include_directories(${CMAKE_SOURCE_DIR}/Core)
+
 include_directories(${CMAKE_SOURCE_DIR}/WebEngines)
 include_directories(${CMAKE_SOURCE_DIR}/third-party/includes)
 
@@ -44,6 +45,7 @@ set(CMAKE_AUTORCC ON)
 if (WIN32)
 	set (SIELO_LIBS d3d9)
     add_executable(sielo-browser WIN32 ${SOURCE_FILES} ic_sielo.rc)
+	include_directories(${CMAKE_SOURCE_DIR}/Core/http)
 elseif(APPLE)
     add_executable(sielo-browser MACOSX_BUNDLE ${SOURCE_FILES} ${ICON_PATH})
     set_source_files_properties(${ICON_PATH} PROPERTIES MACOSX_PACKAGE_LOCATION Resources)

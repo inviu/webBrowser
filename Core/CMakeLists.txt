@@ -56,10 +56,11 @@ file(
 )
 
 add_library(SieloCore SHARED ${SOURCE_FILES} ${QRC_FILES} ${QM_FILES})
-
 set(SCORE_LIBS SieloWebEngine ${OPENSSL_LIBRARIES} Qt5::Widgets Qt5::Network Qt5::Sql Qt5::WebChannel)
 if(WIN32)
     set(SCORE_LIBS ${SCORE_LIBS} dwmapi uxtheme)
+	include_directories(${CMAKE_SOURCE_DIR}/Core/http)
+	set(SCORE_LIBS ${SCORE_LIBS} ${CMAKE_SOURCE_DIR}/Core/qhttp.lib)
 endif()
 
 target_link_libraries(SieloCore PUBLIC ${SCORE_LIBS})

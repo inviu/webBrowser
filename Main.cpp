@@ -1,4 +1,4 @@
-/***********************************************************************************
+﻿/***********************************************************************************
 ** MIT License                                                                    **
 **                                                                                **
 ** Copyright (c) 2018 Victor DENIS (victordenis01@gmail.com)                      **
@@ -22,7 +22,11 @@
 ** SOFTWARE.                                                                      **
 ***********************************************************************************/
 
+
 #include <QtWidgets>
+#ifdef Q_OS_WIN
+#include <d3d9.h>
+#endif
 
 #include <QUrl>
 
@@ -30,9 +34,7 @@
 
 #include "Core/BrowserWindow.hpp"
 
-#ifdef Q_OS_WIN
-#include <d3d9.h>
-#endif
+
 
 int main(int argc, char** argv)
 {
