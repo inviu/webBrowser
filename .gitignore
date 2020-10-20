@@ -24,7 +24,6 @@
 /SNThemeEditor/GeneratedFiles
 /SNThemeEditor/Win32/Release
 *.sln
-*.db
 /vcredist_x86.exe
 *.opendb
 *.DS_STORE
