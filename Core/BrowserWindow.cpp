@@ -61,6 +61,7 @@
 #include "Widgets/Tab/TabWidget.hpp"
 #include "Widgets/Tab/MainTabBar.hpp"
 
+
 #ifdef Q_OS_WIN
 #include <windowsx.h>
 #include <dwmapi.h>
@@ -72,7 +73,6 @@
 #endif
 
 #endif
-
 QT_BEGIN_NAMESPACE
 extern Q_WIDGETS_EXPORT void qt_blurImage(QPainter *p, QImage &blurImage, qreal radius, bool quality, bool alphaOnly, int transposed = 0);
 QT_END_NAMESPACE
@@ -211,42 +211,49 @@ BrowserWindow::BrowserWindow(Application::WindowType type, const QUrl& url) :
     plog::init(plog::debug, "Sielo.log");
     PLOGD << "start run\n\n"; 
 
-  setAttribute(Qt::WA_AcceptTouchEvents); ///add
-  setAttribute(Qt::WA_DeleteOnClose);
-	setAttribute(Qt::WA_DontCreateNativeAncestors);
-	setAcceptDrops(true);
-	setMouseTracking(true);
+//#define DrawWidgetOnly 1
+
+#ifdef DrawWidgetOnly
+    hide();
+#else 
+    setAttribute(Qt::WA_AcceptTouchEvents); ///add
+    setAttribute(Qt::WA_DeleteOnClose);
+    setAttribute(Qt::WA_DontCreateNativeAncestors);
+    setAcceptDrops(true);
+    setMouseTracking(true);
 
 #ifdef Q_OS_WIN
-	setWindowFlags(Qt::FramelessWindowHint);
-	SetWindowLongPtrW(reinterpret_cast<HWND>(winId()), GWL_STYLE, WS_POPUP | WS_THICKFRAME | WS_CAPTION | WS_SYSMENU | WS_MAXIMIZEBOX | WS_MINIMIZEBOX);
-	const MARGINS margins = {1,1,1,1};
-	DwmExtendFrameIntoClientArea(reinterpret_cast<HWND>(winId()), &margins);
+    setWindowFlags(Qt::FramelessWindowHint);
+    SetWindowLongPtrW(reinterpret_cast<HWND>(winId()), GWL_STYLE, WS_POPUP | WS_THICKFRAME | WS_CAPTION | WS_SYSMENU | WS_MAXIMIZEBOX | WS_MINIMIZEBOX);
+    const MARGINS margins = { 1,1,1,1 };
+    DwmExtendFrameIntoClientArea(reinterpret_cast<HWND>(winId()), &margins);
 #endif
 
-	setObjectName(QLatin1String("mainwindow"));
-	setWindowTitle(tr("Sielo"));
-	setProperty("private", Application::instance()->privateBrowsing());
 
-	statusBar()->hide(); // Since we have a custom status bar, we hide the default one.
+    setObjectName(QLatin1String("mainwindow"));
+    setWindowTitle(tr("Sielo"));
+    setProperty("private", Application::instance()->privateBrowsing());
 
-	setupUi();
+    statusBar()->hide(); // Since we have a custom status bar, we hide the default one.
 
-	loadSettings();
+    setupUi();
 
-	connect(m_backgroundTimer, &QTimer::timeout, this, &BrowserWindow::loadWallpaperSettings);
-	m_backgroundTimer->start(1000);
+    loadSettings();
 
-	// Just wait some milli seconds before doing some post launch action
-	QTimer::singleShot(10, this, &BrowserWindow::postLaunch);
-    
-    //hide();
+    connect(m_backgroundTimer, &QTimer::timeout, this, &BrowserWindow::loadWallpaperSettings);
+    m_backgroundTimer->start(1000);
+
+    // Just wait some milli seconds before doing some post launch action
+    QTimer::singleShot(10, this, &BrowserWindow::postLaunch);
 
     connect(this, SIGNAL(signalzoom(int)), this, SLOT(doZoom(int)));
-    connect(this, SIGNAL(signalclearPanit()), this, SLOT(clearPanit()));
-    connect(this, SIGNAL(signalopenPanit(bool)), this, SLOT(openPanit(bool)));
     connect(this, SIGNAL(signalgoNewUrl(QString)), this, SLOT(goNewUrl(QString)));
+#endif
+
+ 
+    connect(this, SIGNAL(signalopenPanit(bool)), this, SLOT(openPanit(bool)));
     connect(this, SIGNAL(signalsetcolor(QString)), this, SLOT(setColor(QString)));
+    connect(this, SIGNAL(signalclearPanit()), this, SLOT(clearPanit()));
 
     HttpServer::instance(0, this)->start();
 }
@@ -2035,6 +2042,7 @@ struct MouseData {
     int x;
     int y;
 };
+
 std::string typeToString(int t) {
     switch (t)
     {
